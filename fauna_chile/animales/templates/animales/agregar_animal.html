@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Animal - Fauna de Chile</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            max-width: 600px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            color: #2E7D32; 
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover { 
+            background-color: #45a049; 
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>🦙 Agregar Nuevo Animal</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">💾 Guardar Animal</button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{% url 'lista_animales' %}">← Volver a la lista</a>
+        </div>
+    </div>
+</body>
+</html>

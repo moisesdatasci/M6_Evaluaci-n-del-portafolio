@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fauna de Chile</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 15px;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-login {
+            background-color: #2196F3;
+            color: white;
+        }
+        .btn-login:hover {
+            background-color: #0b7dda;
+        }
+        .btn-logout {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-logout:hover {
+            background-color: #da190b;
+        }
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-add:hover {
+            background-color: #45a049;
+        }
+        .user-info {
+            color: #555;
+            font-size: 14px;
+        }
+        .animal { 
+            border: 2px solid #4CAF50; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+        }
+        h1 { 
+            color: #2E7D32; 
+            margin: 0;
+        }
+        .no-animals {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦙 Fauna de Chile</h1>
+        
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                <span class="user-info">Bienvenido, <strong>{{ user.username }}</strong></span>
+                <a href="{% url 'agregar_animal' %}" class="btn btn-add">+ Agregar Animal</a>
+                <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-logout">Cerrar Sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-login">Iniciar Sesión</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if animales %}
+        {% for animal in animales %}
+        <div class="animal">
+            <h2>{{ animal.nombre }}</h2>
+            <p><strong>Nombre científico:</strong> {{ animal.nombre_cientifico }}</p>
+            <p><strong>Hábitat:</strong> {{ animal.habitat }}</p>
+            <p><strong>Estado:</strong> {{ animal.estado_conservacion }}</p>
+            <p>{{ animal.descripcion }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-animals">
+            <p>No hay animales registrados aún.</p>
+            {% if user.is_authenticated %}
+                <p>¡Sé el primero en agregar uno!</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
